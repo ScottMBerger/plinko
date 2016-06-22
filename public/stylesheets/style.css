@@ -1,0 +1,59 @@
+body {
+	background-color: #124184;
+	color: white;
+}
+
+.betcol {
+	border-style: solid;
+	border-width: 1px;
+	padding: 4px;
+	margin: auto;
+
+}
+
+.toprow {
+	margin-top: 5%;
+}
+
+.transition.ng-enter,
+.transition.ng-leave
+{
+    -webkit-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space:nowrap;
+}
+
+.transition.ng-leave.transition.ng-leave-active,
+.transition.ng-enter {
+    opacity: 0;
+    width: 0px;
+    height: 0px;
+}
+
+.transition.ng-enter.transition.ng-enter-active,
+.transition.ng-leave {
+    opacity: 1;
+    width: 150px;
+    height: 30px;
+}
+
+#chat{
+    display:block;
+
+    height:300px;
+    word-wrap: break-word;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+
+.payout {
+	border-color: green;
+	border-width: 4px;
+}

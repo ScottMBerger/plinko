@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Plinko.io</title>
+    
+    <script src="/javascripts/phaser.min.js"></script>
+    <script type="text/javascript" src="/javascripts/phaser.2.2.2.box2d.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.js"></script>
+    
+    <script src="/javascripts/display.js"></script>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+  </head>
+  <body ng-app="app">
+    <div class="container">
+      
+      <div ng-controller="betting">
+        <div class="toprow row">
+          <div class="col s4 betcol">
+            <ul>
+              <li class="transition" ng-repeat="x in recent | limitTo : 10  track by $index"><span ng-style="{'opacity': (1-(.1*$index))}">{{x}}<span></li>
+            </ul>
+          </div>
+          <div class="col s4betcol">
+            <div id="canvas"></div>
+          </div>
+
+          <div class="col s4 betcol chat">
+            <ul id="chat">
+              <li ng-repeat="x in messages track by $index">{{x}}</li>
+            </ul>
+            <form class="row new-message" action="">
+              <input class="col s10" id="m" autocomplete="off" /><button class="col s2 waves-effect waves-light btn">Send</button>
+            </form>
+          </div>
+        </div>
+       
+        <div>
+          <span ng-if="bettingTime">Betting is open: {{elapsedMs/1000}}</span>
+          <span ng-if="!bettingTime">Betting is closed</span><br>
+          <span>Credits: {{credits ? credits : '...'}}</span><br>
+          <span>Username: {{socketid}}</span>
+        </div>
+        <div class="row">
+
+          <div class="col s4">
+            <div class="betcol" ng-class="payout == 'left' ? 'payout' : ''">
+              <span>Total: {{leftBets.total}}</span>
+              <div id="lform">
+                <input type="number" id="linput" autocomplete="off" min="1" max="{{credits}}" /><button id="lbutton" ng-class="bettingTime ? '' : 'disabled'" class="waves-effect waves-light btn">Bet</button>
+              </div>
+              <ul>
+                <li class="transition" ng-repeat="x in leftBets.list track by $index">{{x}}</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col s4">
+            <div class="betcol" ng-class="payout == 'middle' ? 'payout' : ''">
+              <span>Total: {{midBets.total}}</span>
+              <div id="mform">
+                <input type="number" id="minput" autocomplete="off" min="1" max="{{credits}}"  /><button id="mbutton" ng-class="bettingTime ? '' : 'disabled'" class="waves-effect waves-light btn">Bet</button>
+              </div>
+              <ul>
+                <li class="transition" ng-repeat="x in midBets.list track by $index">{{x}}</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col s4">
+            <div class="betcol" ng-class="payout == 'right' ? 'payout' : ''">
+              <span>Total: {{rightBets.total}}</span>
+              <div id="rform" action="">
+                <input type="number" id="rinput" autocomplete="off" min="1" max="{{credits}}"  /><button id="rbutton" ng-class="bettingTime ? '' : 'disabled'" class="waves-effect waves-light btn">Bet</button>
+              </div>
+              <ul>
+                <li class="transition" ng-repeat="x in rightBets.list track by $index">{{x}}</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <script src="/javascripts/script.js"></script>
+  </body>
+</html>
