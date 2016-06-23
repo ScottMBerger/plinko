@@ -1,0 +1,5 @@
+<div class="col s4 betcol">
+  <ul>
+    <li class="transition" ng-repeat="x in recent | limitTo : 10  track by $index"><span ng-style="{'opacity': (1-(.1*$index))}">{{x}}<span></li>
+  </ul>
+</div>

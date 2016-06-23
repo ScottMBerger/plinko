@@ -1,0 +1,12 @@
+<div class="col s4">
+  <div class="betcol" ng-class="payout == side.side ? 'payout' : ''">
+    <span>Total: {{side.total}} {{payout}}</span>
+    <form ng-submit="side.bet(leftAmount)">
+      <input ng-model="side.amount" type="number" autocomplete="off" min="1" max="{{credits}}">
+      <button ng-class="bettingTime ? '' : 'disabled'" class="waves-effect waves-light btn">Bet</button>
+    </form>
+    <ul>
+      <li class="transition" ng-repeat="x in side.list track by $index">{{x}}</li>
+    </ul>
+  </div>
+</div>

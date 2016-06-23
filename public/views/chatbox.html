@@ -1,0 +1,9 @@
+<div class="col s4 betcol chat">
+  <ul id="chat">
+    <li ng-repeat="x in messages track by $index"><strong>{{x.user}}: </strong>{{x.msg}}</li>
+  </ul>
+
+  <form class="row new-message" ng-submit="addMessage(newMessage)">
+    <input class="col s10" ng-model="newMessage" type="text" name="text" autocomplete="off"/><button class="col s2 waves-effect waves-light btn">Send</button>
+	</form>
+</div>

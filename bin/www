@@ -91,6 +91,9 @@ var startState = function() {
       ballx: rand.num
   }); 
   setTimeout(payoutState, 5000);
+  io.emit('hellotest', {
+      test: "HAI"
+  }); 
 }
 
 var payoutState = function() {
@@ -170,9 +173,11 @@ io.on('connection', function(socket){
     io.emit('right message', msg, socket.id);
   });
 
+  
+
   socket.on('chat message', function(msg){
     //io.emit('chat message', socket.id.substr(3, 4)+": "+msg);
-    socket.broadcast.emit('chat message', socket.id.substr(3, 4)+": "+msg);
+    socket.broadcast.emit('chat message', {user: socket.id.substr(3, 4), msg: msg});
   });
 });
 
