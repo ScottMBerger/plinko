@@ -11,7 +11,8 @@ var mongoose = require('mongoose');
 require('./models/Posts');
 require('./models/Comments');
 require('./models/Solutions');
-mongoose.connect('mongodb://localhost/news');
+var mongoURI = process.env.MONGOLAB_URI;
+mongoose.connect(mongoURI);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
