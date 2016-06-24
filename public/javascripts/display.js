@@ -71,12 +71,13 @@ app.component('recentlist', {
 });
 
 
-app.controller('betting', function($scope, $interval, socket) {
+app.controller('betting', function($scope, $rootScope, $interval, socket) {
 	$scope.credits = false;
 	$scope.bettingTime = false;
-	$scope.leftBets = {"total":0, "list":[]};
-	$scope.midBets = {"total":0, "list":[]};
-	$scope.rightBets = {"total":0, "list":[]};
+	$scope.betAmount = '';
+	$scope.leftBets = {"total":0, "last":0, "list":[]};
+	$scope.midBets = {"total":0, "last":0, "list":[]};
+	$scope.rightBets = {"total":0, "last":0, "list":[]};
 	var timerPromise = false;
 
 	$scope.leftBet = function(amount) {
@@ -97,15 +98,27 @@ app.controller('betting', function($scope, $interval, socket) {
 		}
 	};
 
+	$scope.adjBet = function(entry) {
+		if (entry == 'clear') {
+			$scope.betAmount = '';
+		} else if (entry == 'double') {
+			$scope.betAmount = typeof $scope.betAmount == 'number' ? ($scope.betAmount*2 <= $scope.credits ? $scope.betAmount*2 : $scope.credits) : '';
+		} else if (entry == 'half') {
+			$scope.betAmount = typeof $scope.betAmount == 'number' ? $scope.betAmount/2 : '';
+		} else {
+			$scope.betAmount = typeof $scope.betAmount == 'number' ? ($scope.betAmount + entry <= $scope.credits ? $scope.betAmount + entry : $scope.credits) : entry;
+		}
+	};
+
 	socket.on('connect', function(msg){
 		socket.id();
 	 });
 
 	socket.on('betState', function(msg){
 		$scope.payout = '';
-		$scope.leftBets = {"total":0, "list":[]};
-		$scope.midBets = {"total":0, "list":[]};
-		$scope.rightBets = {"total":0, "list":[]};
+		$scope.leftBets = {"total":0, "last": $scope.leftBets.total, "list":[]};
+		$scope.midBets = {"total":0, "last": $scope.midBets.total, "list":[]};
+		$scope.rightBets = {"total":0, "last": $scope.rightBets.total, "list":[]};
 
 		$scope.bettingTime = new Date();
 		timerPromise = $interval(function() {
@@ -130,16 +143,19 @@ app.controller('betting', function($scope, $interval, socket) {
 	});
 
 	socket.on('left message', function(amount, user){
+		$scope.leftBets.last = $scope.leftBets.total;
 		$scope.leftBets.total += Number(amount);
 		$scope.leftBets.list.push(user.substr(3, 4)+" "+amount);
 	});
 
 	socket.on('middle message', function(amount, user){
+		$scope.midBets.last = $scope.midBets.total;
 		$scope.midBets.total += Number(amount);
 		$scope.midBets.list.push(user.substr(3, 4)+" "+amount);
 	});
 
 	socket.on('right message', function(amount, user){
+		$scope.rightBets.last = $scope.rightBets.total;
 		$scope.rightBets.total += Number(amount);
 		$scope.rightBets.list.push(user.substr(3, 4)+" "+amount);
 	});

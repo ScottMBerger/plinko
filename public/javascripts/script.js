@@ -53,7 +53,7 @@ app.controller('game', function($scope, $interval, socket) {
     function create() {
         game.world.setBounds(0, -0, "100", "100");
 
-        game.stage.backgroundColor = '#124184';
+        game.stage.backgroundColor = '#564285';
         game.stage.disableVisibilityChange = true;
         // Enable Box2D physics
         game.physics.startSystem(Phaser.Physics.BOX2D);

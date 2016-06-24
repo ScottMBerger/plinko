@@ -1,16 +1,22 @@
 body {
-	background-color: #124184;
-	color: white;
+	background-color: #564285;
+	color: #80E680;
 }
 
 .betcol {
+	color: #1c252f;
+	background-color: #f2f2f2;
 	border-style: solid;
+	border-color: white;
 	border-width: 1px;
 	padding: 4px;
 	margin: auto;
 
 }
 
+.recent {
+	width: 100px;
+}
 .toprow {
 	margin-top: 5%;
 }
@@ -44,16 +50,22 @@ body {
     height: 30px;
 }
 
+.chat {
+	width: 15%;
+}
 #chat{
     display:block;
 
-    height:300px;
     word-wrap: break-word;
     overflow-y:scroll;
     overflow-x:hidden;
 }
 
 .payout {
-	border-color: green;
+	border-color: #69f0ae;
 	border-width: 4px;
+}
+
+.new-message {
+	padding: 20px;
 }
