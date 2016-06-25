@@ -138,7 +138,7 @@ app.controller('betting', function($scope, $rootScope, $interval, socket) {
 		timerPromise = $interval(function() {
 			var now = new Date();
         //$scope.time = now;
-        $scope.elapsedMs = 5000 + $rootScope.bettingTime.getTime() - now.getTime();
+        $scope.elapsedMs = 10000 + $rootScope.bettingTime.getTime() - now.getTime();
       }, 31);
 
 	});
@@ -158,7 +158,7 @@ app.controller('betting', function($scope, $rootScope, $interval, socket) {
 
 	socket.on('left message', function(data, sockid){
 		$scope.leftBets.last = $scope.leftBets.total;
-		$scope.leftBets.total += Number(amount.amount);
+		$scope.leftBets.total += Number(data.amount);
 		$scope.leftBets.list.push(data.user+" "+data.amount);
 	});
 

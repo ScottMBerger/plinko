@@ -113,7 +113,7 @@ var betState = function() {
       ballx: rand.num,
       spot: rand.land
   });
-  setTimeout(startState, 5000);
+  setTimeout(startState, 10000);
 }
 
 startState();
@@ -133,14 +133,14 @@ io.on('connection', function(socket){
   socket.on('new player', function(player){
     io.emit('player join', player);
   });
-  
+
   socket.on('left bet', function(msg){
     console.log(socket.id+ " leftbets");
     leftBets.push({
       bet: msg.amount,
       id: socket.id
     });
-    users[currentPlayer.id].credits -= msg;
+    users[currentPlayer.id].credits -= msg.amount;
     socket.emit('updateCredits', users[currentPlayer.id].credits);
     io.emit('left message', msg, socket.id);
   });
@@ -150,7 +150,7 @@ io.on('connection', function(socket){
       bet: msg.amount,
       id: socket.id
     });
-    users[currentPlayer.id].credits -= msg;
+    users[currentPlayer.id].credits -= msg.amount;
     socket.emit('updateCredits', users[currentPlayer.id].credits);
     io.emit('middle message', msg, socket.id);
   });
@@ -160,7 +160,7 @@ io.on('connection', function(socket){
       bet: msg.amount,
       id: socket.id
     });
-    users[currentPlayer.id].credits -= msg;
+    users[currentPlayer.id].credits -= msg.amount;
     socket.emit('updateCredits', users[currentPlayer.id].credits);
     io.emit('right message', msg, socket.id);
   });

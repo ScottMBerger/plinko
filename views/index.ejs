@@ -31,7 +31,7 @@
               <span ng-if="!bettingTime">Betting is closed</span>
               <span ng-if="bettingTime">Betting is open: {{elapsedMs/1000}}</span>
               <div class="progress">
-                  <div ng-if="bettingTime" class="determinate" style="width: {{(elapsedMs-100)/50}}%"></div>
+                  <div ng-if="bettingTime" class="determinate" style="width: {{(elapsedMs)/100}}%"></div>
               </div>
             </div>
           </div>
