@@ -3,7 +3,6 @@ var app = angular.module('app', ['ngAnimate']);
 
 app.factory('socket', function ($rootScope) {
 	var socket = io();
-	console.log(socket.io.engine.id);
 	return {
 		id: function (eventName, callback) {
 			$rootScope.socketid = socket.io.engine.id.substr(1, 4);
@@ -59,7 +58,6 @@ app.component('chatbox', {
 
 function RecentListController($scope, socket) {
 	$scope.recent = [];
-
 	socket.on('payoutState', function(msg){
 		$scope.recent.unshift(msg.spot);
 	});
@@ -73,7 +71,7 @@ app.component('recentlist', {
 
 app.controller('betting', function($scope, $rootScope, $interval, socket) {
 	$scope.credits = false;
-	$scope.bettingTime = false;
+	$rootScope.bettingTime = false;
 	$scope.betAmount = '';
 	$scope.leftBets = {"total":0, "last":0, "list":[]};
 	$scope.midBets = {"total":0, "last":0, "list":[]};
@@ -81,19 +79,19 @@ app.controller('betting', function($scope, $rootScope, $interval, socket) {
 	var timerPromise = false;
 
 	$scope.leftBet = function(amount) {
-		if ($scope.bettingTime && $scope.credits && $scope.credits > 0 && amount > 0 && amount <= $scope.credits) {
+		if ($rootScope.bettingTime && $scope.credits && $scope.credits > 0 && amount > 0 && amount <= $scope.credits) {
 			socket.emit('left bet', amount);
 		}
 	};
 
 	$scope.midBet = function(amount) {
-		if ($scope.bettingTime && $scope.credits && $scope.credits > 0 && amount > 0 && amount <= $scope.credits) {
+		if ($rootScope.bettingTime && $scope.credits && $scope.credits > 0 && amount > 0 && amount <= $scope.credits) {
 			socket.emit('middle bet', amount);
 		}
 	};
 
 	$scope.rightBet = function(amount) {
-		if ($scope.bettingTime && $scope.credits && $scope.credits > 0 && amount > 0 && amount <= $scope.credits) {
+		if ($rootScope.bettingTime && $scope.credits && $scope.credits > 0 && amount > 0 && amount <= $scope.credits) {
 			socket.emit('right bet', amount);
 		}
 	};
@@ -120,11 +118,11 @@ app.controller('betting', function($scope, $rootScope, $interval, socket) {
 		$scope.midBets = {"total":0, "last": $scope.midBets.total, "list":[]};
 		$scope.rightBets = {"total":0, "last": $scope.rightBets.total, "list":[]};
 
-		$scope.bettingTime = new Date();
+		$rootScope.bettingTime = new Date();
 		timerPromise = $interval(function() {
 			var now = new Date();
         //$scope.time = now;
-        $scope.elapsedMs = 5000 + $scope.bettingTime.getTime() - now.getTime();
+        $scope.elapsedMs = 5000 + $rootScope.bettingTime.getTime() - now.getTime();
       }, 31);
 
 	});
@@ -139,7 +137,7 @@ app.controller('betting', function($scope, $rootScope, $interval, socket) {
 			$interval.cancel(timerPromise);
 		};
 
-		$scope.bettingTime = false;
+		$rootScope.bettingTime = false;
 	});
 
 	socket.on('left message', function(amount, user){

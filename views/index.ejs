@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Plinko.io</title>
+    <title>Social Plinko</title>
     
     <script src="/javascripts/phaser.min.js"></script>
     <script type="text/javascript" src="/javascripts/phaser.2.2.2.box2d.min.js"></script>
@@ -13,30 +13,35 @@
     <script src="/javascripts/display.js"></script>
     <script src="/javascripts/directives.js"></script>
   
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
-  <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   </head>
   <body ng-app="app">
     <div class="container">
       
       <div ng-controller="betting">
         <div class="toprow row">
-          <recentlist></recentlist>
-
-          <div ng-controller="game" class="col s4betcol">
-            <div id="canvas"></div>
+          <div class="col s3  hide-on-small-only">
+            <recentlist></recentlist>
+            <div class="section betcol card toprow">
+              <span>Username: {{socketid}}</span><br>
+              <span>Credits: {{credits ? credits : '...'}}</span><br>
+              <span ng-if="!bettingTime">Betting is closed</span>
+              <span ng-if="bettingTime">Betting is open: {{elapsedMs/1000}}</span>
+            </div>
+          </div>
+          <div ng-controller="game" class="col s12 m4 offset-m1">
+            <div class="gamecanvas">
+              <div id="canvas"></div>
+            </div>
           </div>
 
           <chatbox></chatbox>
         </div>
        
-        <div>
-          <span ng-if="bettingTime">Betting is open: {{elapsedMs/1000}}</span>
-          <span ng-if="!bettingTime">Betting is closed</span><br>
-          <span>Credits: {{credits ? credits : '...'}}</span><br>
-          <span>Username: {{socketid}}</span>
-        </div>
+
         <div class="row">
           <div class="col s12">
             <div class="betcol card">
@@ -46,7 +51,8 @@
               <button ng-click="adjBet(25)" class="waves-effect waves-light btn green accent-2">+25</button>
               <button ng-click="adjBet('half')" class="waves-effect waves-light btn green accent-2">1/2</button>
               <button ng-click="adjBet('double')" class="waves-effect waves-light btn green accent-2">x2</button>
-              <input ng-model="betAmount" type="number" autocomplete="off" min="1" max="{{credits}}" pattern="\d*">
+              <span class="hide-on-med-and-up">Credits: {{credits ? credits : '...'}}</span>
+              <input ng-model="betAmount" type="number" autocomplete="off" min="1" max="{{credits}}" pattern="\d*" placeholder="Enter bet amount..">
             </div>
           </div>
         </div>

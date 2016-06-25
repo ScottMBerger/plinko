@@ -1,6 +1,6 @@
 
 app.controller('game', function($scope, $interval, socket) {
-    var game = new Phaser.Game(350, 420, Phaser.AUTO, 'canvas', {preload: preload, create: create, update: update, render: render });
+    var game = new Phaser.Game(290, 400, Phaser.CANVAS, 'canvas', {preload: preload, create: create, update: update, render: render }); //350, 420
     function preload() {
         game.load.image('ballsprite', '/images/ball.png');
     }

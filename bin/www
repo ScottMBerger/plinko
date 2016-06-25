@@ -29,22 +29,11 @@ var io = require('socket.io')(server);
 var users = [];
 var sockets = {};
 
-var resultTable = [];
-resultTable[0] = {num: -1300, land:"m"};
-resultTable[1] = {num: -1000, land:"m"};
-resultTable[2] = {num: -700, land:"r"};
-resultTable[3] = {num: -400, land:"r"};
-resultTable[4] = {num: -100, land:"m"};
-resultTable[5] = {num: 200, land:"m"};
-resultTable[6] = {num: 500, land:"r"};
-resultTable[7] = {num: 800, land:"r"};
-resultTable[8] = {num: 1100, land:"m"};
-var rand = resultTable[Math.floor(Math.random() * resultTable.length)];
+var rand = {num: -1300, land:"m"};
 var endgame = true;
 var leftBets = [];
 var midBets = [];
 var rightBets = [];
-var winTbl = {"l":leftBets, "m":midBets, "r":rightBets};
 var rng = 101;
 
 var mongoose = require('mongoose');
@@ -98,7 +87,6 @@ var startState = function() {
 
 var payoutState = function() {
   var ballx = Math.floor(350 + (Math.random() * 2798));
-
     console.log("payout winners: "+rand.land);
     if (rand.land == "left") {
       calcWinners(leftBets);

@@ -1,11 +1,16 @@
-<div class="col s4 betcol chat card">
-  <ul id="chat">
-    <li ng-repeat="x in messages track by $index"><strong>{{x.user}}: </strong>{{x.msg}}</li>
-  </ul>
+<div class="col s3 right hide-on-med-and-down">
+	<div class="betcol chat card">
+		<ul id="chat">
+		  <li ng-repeat="x in messages track by $index"><strong>{{x.user}}: </strong>{{x.msg}}</li>
+		</ul>
 
-  <form class="row new-message" ng-submit="addMessage(newMessage)">
-  	<div class="input-field">
-    	<input class="col s10" ng-model="newMessage" type="search" name="text" autocomplete="off"/><button class="col s2 waves-effect waves-light btn green accent-2">Send</button>
-		</div>
-	</form>
+		<form class="row new-message" ng-submit="addMessage(newMessage)">
+			<div class="input-field">
+				<div class="">
+					<input class="col s8 input" ng-model="newMessage" type="search" name="text" autocomplete="off"/>
+				</div>
+		  	<button class="col s4 waves-effect waves-light btn green accent-2">Chat</button>
+			</div>
+		</form>
+	</div>
 </div>

@@ -14,11 +14,8 @@ body {
 
 }
 
-.recent {
-	width: 100px;
-}
 .toprow {
-	margin-top: 5%;
+	margin-top: 3%;
 }
 
 .transition.ng-enter,
@@ -51,15 +48,27 @@ body {
 }
 
 .chat {
-	width: 15%;
+  padding-bottom: 0px
+	margin-bottom: 0px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.input {
+	padding: 0px !important;
+	margin-bottom: 0px !important;
 }
 #chat{
-    display:block;
+  display:block;
 
-    word-wrap: break-word;
-    overflow-y:scroll;
-    overflow-x:hidden;
+  height:280px;
+  word-wrap: break-word;
+  overflow-y:scroll;
+  overflow-x:hidden;
+  padding-bottom: 0px
+	margin-bottom: 0px;
 }
+
 
 .payout {
 	border-color: #69f0ae;
@@ -67,5 +76,45 @@ body {
 }
 
 .new-message {
-	padding: 20px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 0px
+	margin-bottom: 0px;
+}
+
+.gamecanvas {
+	margin: auto;
+}
+
+canvas {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+
+.animate.ng-enter, 
+.animate.ng-leave
+{ 
+    -webkit-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+} 
+ 
+.animate.ng-enter {
+    top: -100%;
+}
+.animate.ng-enter.transition.ng-enter-active {
+    top: 0;
+}
+ 
+.animate.ng-leave {
+    top: 0;
+}
+.animate.ng-leave.transition.ng-leave-active {
+    top: 100%;
 }

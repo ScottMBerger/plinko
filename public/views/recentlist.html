@@ -1,5 +1,5 @@
-<div class="col m3 s1 betcol card recent">
+<div class="section betcol card">
   <ul>
-    <li class="recent transition" ng-repeat="x in recent | limitTo : 10  track by $index"><span ng-style="{'opacity': (1-(.1*$index))}">{{x}}<span></li>
+    <li class="animate" ng-repeat="x in recent | limitTo : 10  track by $index"><h6 class="center-align" ng-style="{'opacity': (1-(.1*$index))}">{{x}}<span></li>
   </ul>
 </div>
