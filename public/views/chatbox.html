@@ -1,7 +1,7 @@
 <div class="col s3 right hide-on-med-and-down">
 	<div class="betcol chat card">
 		<ul id="chat">
-		  <li ng-repeat="x in messages track by $index"><strong>{{x.user}}: </strong>{{x.msg}}</li>
+		  <li ng-repeat="x in messages track by $index"><strong>{{x.user}}{{x.msg ? ": " : ""}}</strong>{{x.msg}}</li>
 		</ul>
 
 		<form class="row new-message" ng-submit="addMessage(newMessage)">

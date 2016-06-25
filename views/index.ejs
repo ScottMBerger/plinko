@@ -26,10 +26,13 @@
           <div class="col s3  hide-on-small-only">
             <recentlist></recentlist>
             <div class="section betcol card toprow">
-              <span>Username: {{socketid}}</span><br>
+              <span>Username: {{name ? name : socketid}}</span><br>
               <span>Credits: {{credits ? credits : '...'}}</span><br>
               <span ng-if="!bettingTime">Betting is closed</span>
               <span ng-if="bettingTime">Betting is open: {{elapsedMs/1000}}</span>
+              <div class="progress">
+                  <div ng-if="bettingTime" class="determinate" style="width: {{(elapsedMs-100)/50}}%"></div>
+              </div>
             </div>
           </div>
           <div ng-controller="game" class="col s12 m4 offset-m1">
@@ -96,9 +99,21 @@
           </div>
 
         </div>
+        <div id="login" class="modal">
+          <div class="modal-content">
+            <form class="row" ng-submit="login(entered)">
+              <h3 class="removebot blackt center-align">Enter a nickname</h3><br>
+              <input class="col s10 offset-s1 blackt center-align" ng-model="entered" minlength="2" maxlength="8" autofocus required><br>
+              <button type="submit" class="col s10 offset-s1 waves-effect waves-light btn green accent-2">Submit</button>
+            </form>
+          </div>
+        </div>
+
       </div>
 
     </div>
+
+    
 
     <script src="/javascripts/script.js"></script>
   </body>

@@ -37,15 +37,20 @@ app.factory('socket', function ($rootScope) {
 });
 
 
-function ChatBoxController($scope, socket) {
+function ChatBoxController($rootScope, $scope, socket) {
 	$scope.messages = [];
 
 	socket.on('chat message', function(msg){
 		$scope.messages.push(msg);
 	});
 
+	socket.on('player join', function(p){
+		$scope.messages.push({user: p + " has joined the server"});
+	});
+
 	$scope.addMessage = function(message) {
-		socket.emit('chat message', message);
+		data = {user: ($rootScope.name ? $rootScope.name : $rootScope.socketid), msg: message};
+		socket.emit('chat message', data);
 		$scope.messages.push({user: "You", msg: message});
 		$scope.newMessage = '';
 	};
@@ -70,6 +75,14 @@ app.component('recentlist', {
 
 
 app.controller('betting', function($scope, $rootScope, $interval, socket) {
+	$('#login').openModal();
+
+	$scope.login = function(givenName) {
+		$rootScope.name = givenName;
+		$('#login').closeModal();
+		socket.emit('new player', givenName);
+	};
+
 	$scope.credits = false;
 	$rootScope.bettingTime = false;
 	$scope.betAmount = '';
@@ -80,19 +93,22 @@ app.controller('betting', function($scope, $rootScope, $interval, socket) {
 
 	$scope.leftBet = function(amount) {
 		if ($rootScope.bettingTime && $scope.credits && $scope.credits > 0 && amount > 0 && amount <= $scope.credits) {
-			socket.emit('left bet', amount);
+			var bet = {amount: amount, user: ($rootScope.name ? $rootScope.name : $rootScope.socketid)};
+			socket.emit('left bet', bet);
 		}
 	};
 
 	$scope.midBet = function(amount) {
 		if ($rootScope.bettingTime && $scope.credits && $scope.credits > 0 && amount > 0 && amount <= $scope.credits) {
-			socket.emit('middle bet', amount);
+			var bet = {amount: amount, user: ($rootScope.name ? $rootScope.name : $rootScope.socketid)};
+			socket.emit('middle bet', bet);
 		}
 	};
 
 	$scope.rightBet = function(amount) {
 		if ($rootScope.bettingTime && $scope.credits && $scope.credits > 0 && amount > 0 && amount <= $scope.credits) {
-			socket.emit('right bet', amount);
+			var bet = {amount: amount, user: ($rootScope.name ? $rootScope.name : $rootScope.socketid)};
+			socket.emit('right bet', bet);
 		}
 	};
 
@@ -110,7 +126,7 @@ app.controller('betting', function($scope, $rootScope, $interval, socket) {
 
 	socket.on('connect', function(msg){
 		socket.id();
-	 });
+ 	});
 
 	socket.on('betState', function(msg){
 		$scope.payout = '';
@@ -140,22 +156,22 @@ app.controller('betting', function($scope, $rootScope, $interval, socket) {
 		$rootScope.bettingTime = false;
 	});
 
-	socket.on('left message', function(amount, user){
+	socket.on('left message', function(data, sockid){
 		$scope.leftBets.last = $scope.leftBets.total;
-		$scope.leftBets.total += Number(amount);
-		$scope.leftBets.list.push(user.substr(3, 4)+" "+amount);
+		$scope.leftBets.total += Number(amount.amount);
+		$scope.leftBets.list.push(data.user+" "+data.amount);
 	});
 
-	socket.on('middle message', function(amount, user){
+	socket.on('middle message', function(data, sockid){
 		$scope.midBets.last = $scope.midBets.total;
-		$scope.midBets.total += Number(amount);
-		$scope.midBets.list.push(user.substr(3, 4)+" "+amount);
+		$scope.midBets.total += Number(data.amount);
+		$scope.midBets.list.push(data.user+" "+data.amount);
 	});
 
-	socket.on('right message', function(amount, user){
+	socket.on('right message', function(data, sockid){
 		$scope.rightBets.last = $scope.rightBets.total;
-		$scope.rightBets.total += Number(amount);
-		$scope.rightBets.list.push(user.substr(3, 4)+" "+amount);
+		$scope.rightBets.total += Number(data.amount);
+		$scope.rightBets.list.push(data.user+" "+data.amount);
 	});
 
 	socket.on('updateCredits', function (credits) {

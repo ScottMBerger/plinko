@@ -130,10 +130,14 @@ io.on('connection', function(socket){
   sockets[socket.id] = socket;
   users[currentPlayer.id] = currentPlayer;
 
+  socket.on('new player', function(player){
+    io.emit('player join', player);
+  });
+  
   socket.on('left bet', function(msg){
     console.log(socket.id+ " leftbets");
     leftBets.push({
-      bet: msg,
+      bet: msg.amount,
       id: socket.id
     });
     users[currentPlayer.id].credits -= msg;
@@ -143,7 +147,7 @@ io.on('connection', function(socket){
 
   socket.on('middle bet', function(msg){
     midBets.push({
-      bet: msg,
+      bet: msg.amount,
       id: socket.id
     });
     users[currentPlayer.id].credits -= msg;
@@ -153,7 +157,7 @@ io.on('connection', function(socket){
 
   socket.on('right bet', function(msg){
     rightBets.push({
-      bet: msg,
+      bet: msg.amount,
       id: socket.id
     });
     users[currentPlayer.id].credits -= msg;
@@ -165,7 +169,7 @@ io.on('connection', function(socket){
 
   socket.on('chat message', function(msg){
     //io.emit('chat message', socket.id.substr(3, 4)+": "+msg);
-    socket.broadcast.emit('chat message', {user: socket.id.substr(3, 4), msg: msg});
+    socket.broadcast.emit('chat message', {user: msg.user, msg: msg.msg});
   });
 });
 
