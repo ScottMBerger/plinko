@@ -1,6 +1,6 @@
 <div class="col s3 right hide-on-med-and-down">
 	<div class="betcol chat card">
-		<ul id="chat">
+		<ul id="chat" scroll="messages">
 		  <li ng-repeat="x in messages track by $index"><strong>{{x.user}}{{x.msg ? ": " : ""}}</strong>{{x.msg}}</li>
 		</ul>
 

@@ -38,8 +38,6 @@ app.controller('game', function($scope, $interval, socket) {
     AdjustField(gutterVerticesR);
     AdjustField(gutterVerticesL);
 
-
-
     var ballBody;
     var PTM = 100; // conversion ratio for values in arrays above
     var needReset = false;
@@ -58,15 +56,8 @@ app.controller('game', function($scope, $interval, socket) {
         // Enable Box2D physics
         game.physics.startSystem(Phaser.Physics.BOX2D);
 
-
-        //  Set the Sprites body shape to a Circle with the same radius as the sprite (width / 2).
-        
-
-
-        
         // Make the ground body
         var mainBody = new Phaser.Physics.Box2D.Body(this.game, null, 0, 0, 0);
-                ;
 
         game.physics.box2d.ptmRatio = 500;
         game.physics.box2d.gravity.y = 2500; // large gravity to make scene feel smaller

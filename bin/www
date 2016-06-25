@@ -79,10 +79,8 @@ var startState = function() {
   io.emit('startState', {
       ballx: rand.num
   }); 
+  
   setTimeout(payoutState, 5000);
-  io.emit('hellotest', {
-      test: "HAI"
-  }); 
 }
 
 var payoutState = function() {
